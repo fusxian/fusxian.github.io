@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
 <meta property="article:published_time" content="2020-01-15T12:55:20.397Z">
-<meta property="article:modified_time" content="2020-01-15T15:47:10.697Z">
+<meta property="article:modified_time" content="2020-01-30T15:29:02.040Z">
 <meta property="article:author" content="程序猿付显">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
@@ -143,7 +143,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 813 个字)
+                    10 分钟 读完 (大约 1450 个字)
                 </span>
                 
                 
@@ -156,7 +156,7 @@
             
         </h1>
         <div class="content">
-            <p>Java基础知识系列课程-Java变量和数据类型 <a href="http://www.nanyangsoft.com">@程序猿付显</a></p>
+            <p>Java基础知识系列课程-Java变量和数据类型 <a href="http://www.fuxian.org">@程序猿付显</a></p>
 <a id="more"></a>
 <hr>
 <h2 id="一、Java中的变量、常量、注释"><a href="#一、Java中的变量、常量、注释" class="headerlink" title="一、Java中的变量、常量、注释"></a>一、Java中的变量、常量、注释</h2><h3 id="1：变量"><a href="#1：变量" class="headerlink" title="1：变量"></a>1：变量</h3><p>变量是什么呢？–不断变化的量，这个概念需要有深刻地体会，<br>只要在程序中遇到有不确定的值或者需要不断改变的值那么这个地方一定需要用到变量。<br>那我们先来看看变量的声明和定义的过程：<br>&nbsp;&nbsp;声明一个变量  </p>
@@ -175,12 +175,90 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">这个是多行注释，此区域全部都不会被编译</span></span><br><span class="line"><span class="comment">int a = 5;</span></span><br><span class="line"><span class="comment">a = a + 6;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">j++;</span><br><span class="line">System.out.println(j);</span><br></pre></td></tr></table></figure>
 <p>&nbsp;&nbsp;文档注释<br>&nbsp;&nbsp;&nbsp;&nbsp;文档注释：Shift+Alt+J<br>&nbsp;&nbsp;&nbsp;&nbsp;可用来注释类、接口、静态方法、成员方法、静态变量、成员变量、常量<br>&nbsp;&nbsp;&nbsp;&nbsp;或者在定义完：注释类、接口、静态方法、成员方法、静态变量、成员变量、常量后，在上面加上/**在按Enter建也能生成  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 这个是文档注释，此处描述此类的作用及其他信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"HelloWord!"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4：命名规则"><a href="#4：命名规则" class="headerlink" title="4：命名规则"></a>4：命名规则</h3><p>&nbsp;&nbsp;命名规则参照《阿里Java技术手册》，现已改名为《Java技术手册》<br><img src="Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_files/2.jpg" alt=""><br><a href="https://pan.baidu.com/s/1nyI4MYNjFaKMNiMr1cLm0A">阿里Java技术手册</a></p>
+<h3 id="4：命名规则"><a href="#4：命名规则" class="headerlink" title="4：命名规则"></a>4：命名规则</h3><p>&nbsp;&nbsp;命名规则参照《阿里Java技术手册》，现已改名为《Java技术手册》<br><img src="/2020/01/15/java/Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/2.jpg" alt><br><a href="https://pan.baidu.com/s/1nyI4MYNjFaKMNiMr1cLm0A">阿里Java技术手册</a></p>
 <hr>
-<h2 id="二、输入、输出语句"><a href="#二、输入、输出语句" class="headerlink" title="二、输入、输出语句"></a>二、输入、输出语句</h2><h3 id="1：输入语句"><a href="#1：输入语句" class="headerlink" title="1：输入语句"></a>1：输入语句</h3><h3 id="2：输出语句"><a href="#2：输出语句" class="headerlink" title="2：输出语句"></a>2：输出语句</h3><hr>
-<h2 id="三、数据类型"><a href="#三、数据类型" class="headerlink" title="三、数据类型"></a>三、数据类型</h2><h3 id="1：基本数据类型"><a href="#1：基本数据类型" class="headerlink" title="1：基本数据类型"></a>1：基本数据类型</h3><h3 id="2：引用数据类型"><a href="#2：引用数据类型" class="headerlink" title="2：引用数据类型"></a>2：引用数据类型</h3><h3 id="3：内存中的堆和栈"><a href="#3：内存中的堆和栈" class="headerlink" title="3：内存中的堆和栈"></a>3：内存中的堆和栈</h3><h3 id="4：进制之间的转换"><a href="#4：进制之间的转换" class="headerlink" title="4：进制之间的转换"></a>4：进制之间的转换</h3><hr>
-<h2 id="四、关键字"><a href="#四、关键字" class="headerlink" title="四、关键字"></a>四、关键字</h2><p>在编译工具中会有红色提示的都属于关键字，也称之为保留字如下：<br><img src="Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_files/3.jpg" alt=""><br><img src="Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B_files/1.jpg" alt="">  </p>
+<h2 id="二、输入、输出语句"><a href="#二、输入、输出语句" class="headerlink" title="二、输入、输出语句"></a>二、输入、输出语句</h2><h3 id="1：输入语句"><a href="#1：输入语句" class="headerlink" title="1：输入语句"></a>1：输入语句</h3><p>&nbsp;&nbsp;java.util.Scanner 是 Java5 的新特征，我们可以通过 Scanner 类来获取用户的输入<br>&nbsp;&nbsp;Scanner类的基本语法：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Scanner scan = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">String line = scan.nextLine();</span><br></pre></td></tr></table></figure>
+<h3 id="2：输出语句"><a href="#2：输出语句" class="headerlink" title="2：输出语句"></a>2：输出语句</h3><p>&nbsp;&nbsp;输出语句是我们刚学习Java程序时写的第一段儿代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">"Hello World"</span>);</span><br></pre></td></tr></table></figure>
 <hr>
+<h2 id="三、数据类型"><a href="#三、数据类型" class="headerlink" title="三、数据类型"></a>三、数据类型</h2><h3 id="1：基本数据类型"><a href="#1：基本数据类型" class="headerlink" title="1：基本数据类型"></a>1：基本数据类型</h3><p>&nbsp;&nbsp;java中有8种基本数据类型，这8种基本数据类型就要像记自己名字一样记下来  </p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>长度</th>
+<th>范围</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>8位</td>
+<td>-128~127 (-2<sup>7</sup> ~ 2<sup>7-1</sup>)</td>
+<td>byte b = 10;</td>
+</tr>
+<tr>
+<td>short</td>
+<td>16位</td>
+<td>-32768~32767(-2<sup>15</sup> ~ 2<sup>15-1</sup>)</td>
+<td>short s = 1000;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>32位</td>
+<td>-2,147,483,648~2,147,483,647(-2<sup>31</sup> ~ 2<sup>31-1</sup>)</td>
+<td>int i = 20201228;</td>
+</tr>
+<tr>
+<td>long</td>
+<td>64位</td>
+<td>-9,223,372,036,854,775,808~9,223,372,036,854,775,807(-2<sup>63</sup> ~ 2<sup>63-1</sup>)</td>
+<td>long l = 5L;</td>
+</tr>
+<tr>
+<td>char</td>
+<td>16位</td>
+<td>\u0000~\uFFFF</td>
+<td>char c = ‘A’;</td>
+</tr>
+<tr>
+<td>float</td>
+<td>32位</td>
+<td>3.4E-038~3.4E+038</td>
+<td>float f = 3.14F;</td>
+</tr>
+<tr>
+<td>double</td>
+<td>64位</td>
+<td>1.7E-308~1.7E+308</td>
+<td>double d = 3.1415026;</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>1位</td>
+<td>false、true</td>
+<td>boolean flag = true;</td>
+</tr>
+</tbody></table>
+<h3 id="2：引用数据类型"><a href="#2：引用数据类型" class="headerlink" title="2：引用数据类型"></a>2：引用数据类型</h3><p>&nbsp;&nbsp;引用数据类型区别于基本数据类型主要在使用过程中，引用数据类型主要有三种  </p>
+<ol>
+<li>数组</li>
+<li>接口</li>
+<li>类</li>
+</ol>
+<p>&nbsp;&nbsp;其中有我们目前为止常用的几个：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Scanner scan = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">String str = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">char</span> data[] = &#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>那基本数据类型和引用数据类型之间到底有什么区别呢？这就需要我们对Java中的堆和栈有一个初步的了解</p>
+<h3 id="3：内存中的堆和栈"><a href="#3：内存中的堆和栈" class="headerlink" title="3：内存中的堆和栈"></a>3：内存中的堆和栈</h3><p>&nbsp;&nbsp;<strong>基本数据类型</strong>在被创建时，在栈上给其划分一块内存，将数值直接存储在栈上<br>&nbsp;&nbsp;<strong>引用数据类型</strong>在被创建时，首先要在栈上给其引用（句柄）分配一块内存，而对象的具体信息都存储在堆内存上，然后由栈上面的引用指向堆中对象的地址<br>对于这样的文字描述我们还是不能够真切的体会，那我们就用一张图简单演示一下<br><img src="/2020/01/15/java/Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/0.jpg" alt><br>从这张简图中我们可以看到，<br>基本数据类型在<strong>栈</strong>中存储两部分内容，一部分为变量名称，第二部分为此变量所对应的<strong>值</strong><br>引用数据类型在<strong>栈</strong>中也存储两部分内容，一部分为变量名称，第二部分为此变量在<strong>堆</strong>中的地址，此时在<strong>堆</strong>中存储的才是此变量所对应的<strong>值</strong></p>
+<h3 id="4：进制之间的转换"><a href="#4：进制之间的转换" class="headerlink" title="4：进制之间的转换"></a>4：进制之间的转换</h3><p>&nbsp;&nbsp;进制有二进制、八进制、十进制、十六进制,此处我引入简书上的一篇文章，让大家更清晰的看明白进制间的转换  </p>
+<blockquote>
+<p>二进制、八进制、十进制、十六进制之间转换 –MPPC <a href="https://www.jianshu.com/p/555cd32e99cc">https://www.jianshu.com/p/555cd32e99cc</a></p>
+</blockquote>
+<hr>
+<h2 id="四、关键字"><a href="#四、关键字" class="headerlink" title="四、关键字"></a>四、关键字</h2><p>在编译工具中会有红色提示的都属于关键字，也称之为保留字如下：<br><img src="/2020/01/15/java/Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/3.jpg" alt><br><img src="/2020/01/15/java/Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/1.jpg" alt>  </p>
+<hr>
+<p><img src="/2020/01/15/java/Java%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/btm.png" alt></p>
 
         </div>
         
