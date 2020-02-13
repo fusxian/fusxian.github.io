@@ -7,19 +7,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>个人博客开始了 - 程序猿付显</title>
+<title>Spring 依赖注入的三种形式 - 程序猿付显</title>
 
 
-    <meta name="description" content="这就算开始正式写博客了，之前陆陆续续在开源中国及头条上写过文章及视频，以后统一在此平台发布，并转发至其他平台。更多信息 ：@程序猿付显">
+    <meta name="description" content="小哥哥小姐姐【转载】-Spring 依赖注入的三种形式 @孟某人">
 <meta property="og:type" content="article">
-<meta property="og:title" content="个人博客开始了">
-<meta property="og:url" content="http://yoursite.com/2020/01/14/first/index.html">
+<meta property="og:title" content="Spring 依赖注入的三种形式">
+<meta property="og:url" content="http://yoursite.com/2020/02/13/%E5%B0%8F%E5%93%A5%E5%93%A5%E5%B0%8F%E5%A7%90%E5%A7%90%E7%B3%BB%E5%88%97/Spring%20%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E4%B8%89%E7%A7%8D%E5%BD%A2%E5%BC%8F/index.html">
 <meta property="og:site_name" content="程序猿付显">
-<meta property="og:description" content="这就算开始正式写博客了，之前陆陆续续在开源中国及头条上写过文章及视频，以后统一在此平台发布，并转发至其他平台。更多信息 ：@程序猿付显">
+<meta property="og:description" content="小哥哥小姐姐【转载】-Spring 依赖注入的三种形式 @孟某人">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-01-14T13:03:57.000Z">
-<meta property="article:modified_time" content="2020-01-14T15:10:19.527Z">
+<meta property="article:published_time" content="2020-02-13T10:19:19.752Z">
+<meta property="article:modified_time" content="2020-02-13T13:58:58.355Z">
 <meta property="article:author" content="程序猿付显">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
@@ -80,7 +80,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/img.jpg" alt="个人博客开始了" height="28">
+                <img src="/images/img.jpg" alt="Spring 依赖注入的三种形式" height="28">
             
             </a>
         </div>
@@ -133,17 +133,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-14T13:03:57.000Z">2020-01-14</time>
+                <time class="level-item has-text-grey" datetime="2020-02-13T10:19:19.752Z">2020-02-13</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E5%BC%80%E7%AF%87/">开篇</a>
+                <a class="has-link-grey -link" href="/categories/%E5%89%8D%E4%BA%BA%E7%BB%8F%E9%AA%8C/">前人经验</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 69 个字)
+                    11 分钟 读完 (大约 1673 个字)
                 </span>
                 
                 
@@ -157,11 +157,131 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                个人博客开始了
+                Spring 依赖注入的三种形式
             
         </h1>
         <div class="content">
-            <p>这就算开始正式写博客了，之前陆陆续续在开源中国及头条上写过文章及视频，以后统一在此平台发布，并转发至其他平台。<br>更多信息 ：<a href="http://www.nanyangsoft.com">@程序猿付显</a></p>
+            <p>小哥哥小姐姐【转载】-Spring 依赖注入的三种形式 <a href="https://me.csdn.net/qq_44784185">@孟某人</a></p>
+<a id="more"></a>
+<hr>
+<h2 id="Spring-依赖注入的三种形式"><a href="#Spring-依赖注入的三种形式" class="headerlink" title="Spring 依赖注入的三种形式"></a>Spring 依赖注入的三种形式</h2><h3 id="第一种：构造函数注入"><a href="#第一种：构造函数注入" class="headerlink" title="第一种：构造函数注入"></a>第一种：构造函数注入</h3><ul>
+<li><p><strong>所使用标签:</strong>constructor-arg</p>
+</li>
+<li><p>标签出现的位置：<strong>bean标签的内部</strong></p>
+</li>
+<li><p>标签中的属性:</p>
+<ul>
+<li><strong>type</strong>：用于指定要注入的数据的数据类型，该数据类型也是构造函数中某个或某些参数的类型</li>
+<li><strong>index</strong>：用于指定要注入的数据给构造函数中指定索引位置的参数赋值。索引的位置是从0开始</li>
+<li><strong>name：用于指定给构造函数中指定名称的参数赋值  —————-常用的</strong><br>以上三个属性用于指定给构造函数中哪个参数赋值，以下两个用于赋值</li>
+<li>value：用于提供基本类型和String类型的数据</li>
+<li>ref：用于指定其他的bean类型数据。它指的就是在spring的Ioc核心容器中出现过的bean对象</li>
+<li><strong>优势：</strong><br>在获取bean对象时，注入数据是必须的操作，否则对象无法创建成功。</li>
+<li><strong>弊端：</strong><br>改变了bean对象的实例化方式，使我们在创建对象时，如果用不到这些数据，也必须提供。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span> <span class="attr">class</span>=<span class="string">"com.msg.service.AccountServiceImpl"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"泰斯特"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"18"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"birthday"</span> <span class="attr">ref</span>=<span class="string">"now"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- 配置一个日期对象以供birthday属性引用 --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"now"</span> <span class="attr">class</span>=<span class="string">"java.util.Date"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="第二种：set方法注入"><a href="#第二种：set方法注入" class="headerlink" title="第二种：set方法注入"></a>第二种：set方法注入</h3><h4 id="相比于构造函数注入，set方式注入更为常用"><a href="#相比于构造函数注入，set方式注入更为常用" class="headerlink" title="(相比于构造函数注入，set方式注入更为常用)"></a>(相比于构造函数注入，set方式注入更为常用)</h4><ul>
+<li><strong>所使用标签:</strong>==property==</li>
+<li>标签出现的位置：<strong>bean标签的内部</strong></li>
+<li>标签中的属性与使用方法:<ul>
+<li><strong>name</strong>：用于指定注入时所调用的set方法名称</li>
+<li><strong>value</strong>：用于提供基本类型和String类型的数据</li>
+<li><strong>ref</strong>：用于指定其他的bean类型数据。它指的就是在spring的Ioc核心容器中出现过的bean对象<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService2"</span> <span class="attr">class</span>=<span class="string">"com.msg.impl.AccountServiceImpl2"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"TEST"</span> &gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"21"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"birthday"</span> <span class="attr">ref</span>=<span class="string">"now"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置一个日期对象以供birthday属性引用 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"now"</span> <span class="attr">class</span>=<span class="string">"java.util.Date"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>在==property==标签中注入<strong>array(数组)  Map List Set</strong>属性时都有相应的标签与之对应使用方法如下：<br> (结构相同，标签可以互换就比如为数组注入可以使用list或set标签注入)</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService3"</span> <span class="attr">class</span>=<span class="string">"com.msg.impl.AccountServiceImpl3"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--数组注入--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"myarray"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>AAA<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>BBB<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>CCC<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--list注入--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"myList"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>AAA<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>BBB<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>CCC<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--set注入--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mySet"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">set</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>AAA<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>BBB<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">value</span>&gt;</span>CCC<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--set注入--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"myMap"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"testC"</span>&gt;</span>ccc<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"testD"</span>&gt;</span>ddd<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>优势：<ul>
+<li>创建对象时没有明确的限制，可以直接使用默认构造函数</li>
+</ul>
+</li>
+<li>弊端：<ul>
+<li>如果有某个成员必须有值，则获取对象是有可能set方法没有执行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="第三种：注解注入"><a href="#第三种：注解注入" class="headerlink" title="第三种：注解注入"></a>第三种：注解注入</h3><p>  <strong>首先介绍一下bean的常用属性配置：</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">class</span>=<span class="string">""</span> <span class="attr">scope</span>=<span class="string">""</span>  <span class="attr">init-method</span>=<span class="string">""</span> <span class="attr">destroy-method</span>=<span class="string">""</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>id：id的值是我们通过ApplicationContext容器获取对象时的依据(唯一的)</p>
+</li>
+<li><p>class：值为 类的全限定地址</p>
+</li>
+<li><p>init-method：值为类初始化所执行的方法名</p>
+</li>
+<li><p>destroy-method：值为类的销毁时所执行的方法</p>
+</li>
+<li><p>scope:用于指定bean的<strong>作用范围取值</strong>： 常用的就是单例的和多例的 <strong>singleton：单例的（默认值）</strong> <strong>prototype：多例的</strong> request：作用于web应用的请求范围 session：作用于web应用的会话范围 global-session：作用于集群环境的会话范围（全局会话范围），当不是集群环境时，它就是session </p>
+</li>
+<li><h2 id="下面我们来介绍注解："><a href="#下面我们来介绍注解：" class="headerlink" title="下面我们来介绍注解："></a><strong>下面我们来介绍注解：</strong></h2><ul>
+<li><strong>注解的作用</strong>： 和在XML配置文件中编写一个<bean>标签实现的功能是一样的只不过配置的方式不同</bean></li>
+<li><h2 id="用于把当前类对象存入spring容器中注解"><a href="#用于把当前类对象存入spring容器中注解" class="headerlink" title="用于把当前类对象存入spring容器中注解        "></a><strong>用于把当前类对象存入spring容器中注解</strong>        </h2><ul>
+<li><strong>@Component</strong>:<br>  <strong>- 作用</strong>：将当前标注的类对象存入Spring容器中<ul>
+<li><strong>属性</strong>： value：用于指定bean的id。当我们不写时，它的默认值是当前类名，且首字母改小写 。</li>
+<li><strong>@Component衍生的注解</strong>：（以下三个注解他们的作用和属性与Component是一模一样，他们三个是spring框架为我们提供明确的三层使用的注解，使我们的三层对象更加清晰）<ul>
+<li>@Controller：一般用在表现层</li>
+<li>@Service：一般用在业务层</li>
+<li>@Repository：一般用在持久层<br><img src="https://img-blog.csdnimg.cn/20200213164516654.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0Nzg0MTg1,size_16,color_FFFFFF,t_70" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h2 id="用于注入数据的注解"><a href="#用于注入数据的注解" class="headerlink" title="用于注入数据的注解"></a><strong>用于注入数据的注解</strong></h2><ul>
+<li><p>作用：他们的作用就和在xml配置文件中的bean标签中写一个<property>标签的作用是一样的</property></p>
+</li>
+<li><h2 id="Autowired注解"><a href="#Autowired注解" class="headerlink" title="@Autowired注解:"></a><strong>@Autowired注解</strong>:</h2><ul>
+<li>作用：自动按照类型注入。只要容器中有唯一的一个bean对象类型和要注入的变量类型匹配，就可以注入成功，  如果ioc容器中没有任何bean的类型和要注入的变量类型匹配，则报错。如果Ioc容器中有多个类型匹配时则需要<strong>@Qualifier</strong>注解配合使用</li>
+<li>出现位置：可以是变量上，也可以是方法上</li>
+<li>细节：在使用注解注入时，set方法就不是必须的了。</li>
+</ul>
+</li>
+<li><h2 id="Qualifier注解"><a href="#Qualifier注解" class="headerlink" title="@Qualifier注解:    "></a><strong>@Qualifier注解</strong>:    </h2><ul>
+<li>作用：在按照类中注入的基础之上再按照名称注入。它在给类成员注入时不能单独使用要与@Autowired注解的配合下使用。但是在给方法参数注入时可以</li>
+<li>属性：value：用于指定注入bean的id。<img src="https://img-blog.csdnimg.cn/20200213170620204.png" alt></li>
+</ul>
+</li>
+<li><h2 id="Resource注解-推荐使用"><a href="#Resource注解-推荐使用" class="headerlink" title="@Resource注解(推荐使用)"></a><strong>@Resource注解</strong>(推荐使用)</h2><ul>
+<li>作用：直接按照bean的id注入。它可以独立使用</li>
+<li>属性：name：用于指定bean的id。<img src="https://img-blog.csdnimg.cn/20200213173109783.png" alt></li>
+</ul>
+</li>
+<li><h2 id="Value注解"><a href="#Value注解" class="headerlink" title="@Value注解"></a><strong>@Value注解</strong></h2><ul>
+<li>作用：用于注入基本类型和String类型的数据</li>
+<li>属性：value：用于指定数据的值。它可以使用spring中SpEL(也就是spring的el表达式）SpEL的写法：${表达式}<img src="https://img-blog.csdnimg.cn/20200213173152852.png" alt></li>
+</ul>
+</li>
+</ul>
+<p><strong>另外，集合类型的注入只能通过XML来实现</strong>。</p>
+</li>
+<li><h2 id="用于改变作用范围的注解"><a href="#用于改变作用范围的注解" class="headerlink" title="用于改变作用范围的注解"></a><strong>用于改变作用范围的注解</strong></h2><ul>
+<li>@Scope注解<ul>
+<li>作用：他们的作用就和在bean标签中使用scope属性实现的功能是一样的指定bean的作用范围</li>
+<li>属性：value：指定范围的取值。常用取值：singleton(默认单例) prototype(多例)<img src="https://img-blog.csdnimg.cn/2020021317340623.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h2 id="和生命周期相关的注解"><a href="#和生命周期相关的注解" class="headerlink" title="和生命周期相关的注解"></a><strong>和生命周期相关的注解</strong></h2><ul>
+<li><h2 id="PreDestroy注解"><a href="#PreDestroy注解" class="headerlink" title="@PreDestroy注解"></a>@PreDestroy注解</h2><ul>
+<li>作用：用于指定销毁方法(和在bean标签中destroy-methode的作用是一样的)<br><img src="https://img-blog.csdnimg.cn/20200213173501793.png" alt></li>
+</ul>
+</li>
+<li>@PostConstruct注解<ul>
+<li>作用：用于指定初始化方法(和在bean标签中init-method的作用是一样的)<br><img src="https://img-blog.csdnimg.cn/20200213173541169.png" alt><br><a href="https://blog.csdn.net/qq_44784185">联系我</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
         </div>
         
@@ -206,13 +326,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/14/java/Java%E7%AE%80%E4%BB%8B/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Java简介</span>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/12/SqlServer/SqlServer%E4%B8%AD%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                <span class="level-item">SqlServer中企业管理器的使用</span>
+                <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
-        
         
     </div>
 </div>
@@ -703,7 +823,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/img.jpg" alt="个人博客开始了" height="28">
+                    <img src="/images/img.jpg" alt="Spring 依赖注入的三种形式" height="28">
                 
                 </a>
                 <p class="is-size-7">
