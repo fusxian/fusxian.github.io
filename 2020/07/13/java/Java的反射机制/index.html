@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Java的反射机制 - 程序猿付显</title>
+
+
+    <meta name="description" content="Java高级系列课程-Java的反射机制 @程序猿付显">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java的反射机制">
+<meta property="og:url" content="http://yoursite.com/2020/07/13/java/Java%E7%9A%84%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="程序猿付显">
+<meta property="og:description" content="Java高级系列课程-Java的反射机制 @程序猿付显">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2020-07-13T01:40:52.789Z">
+<meta property="article:modified_time" content="2020-07-13T01:40:52.793Z">
+<meta property="article:author" content="程序猿付显">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/img.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/img.jpg" alt="Java的反射机制" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">程序猿付显</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="https://study.163.com/instructor/1411378640.htm?_trace_c_p_k2_=087fa11dc8ab420e8d0d05eeafe19f2e">网易云课堂-在线课程</a>
+                
+                <a class="navbar-item"
+                href="http://www.bailiban.com">百里半平台</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/fusxian">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-13T01:40:52.789Z">2020-07-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    36 分钟 读完 (大约 5399 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Java的反射机制
+            
+        </h1>
+        <div class="content">
+            <p>Java高级系列课程-Java的反射机制 <a href="http://www.fuxian.org">@程序猿付显</a></p>
+<a id="more"></a>
+<hr>
+<h2 id="反射的概念"><a href="#反射的概念" class="headerlink" title="反射的概念"></a>反射的概念</h2><h3 id="反射概述"><a href="#反射概述" class="headerlink" title="反射概述"></a>反射概述</h3><p>什么是反射？<br>反射就是Reflection，JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法；这种动态获取的以及动态调用对象的方法的功能称为Java的反射机制  </p>
+<h3 id="反射的使用场景"><a href="#反射的使用场景" class="headerlink" title="反射的使用场景"></a>反射的使用场景</h3><ul>
+<li>逆向代码 ，例如反编译</li>
+<li>与注解相结合的框架 </li>
+<li>单纯的反射机制应用框架 </li>
+<li>动态生成类框架 </li>
+</ul>
+<h2 id="Java反射API"><a href="#Java反射API" class="headerlink" title="Java反射API"></a>Java反射API</h2><p>首先要分清楚Class类和关键词class的不同，虽然Class类名称上和class很相似，但两者其实没有什么关联。Class类也是一个Java类，它也可以实例化得到对象，与普通类不一样的是Class类中存储的是其它类的类型信息。而这些类型信息正是Java反射机制所需要的，Java的反射机制是由Class类和java.lang.reflect包下的Method、Field、Constructor等类支持的。下面就来了解下这几个类。</p>
+<h3 id="反射核心类-Class类"><a href="#反射核心类-Class类" class="headerlink" title="反射核心类-Class类"></a>反射核心类-Class类</h3><p>类是程序的一部分，每个类都有一个Class对象，换而言之每编写一个新类，就会产生一个Class对象(更准确的来说，是被保存在一个同名的.class文件中)。当程序中需要使用到这个类的时候(包括需要这个类的对象或引用这个类的静态变量)就通过类加载器将类加到内存中来。<br>在进行类加载的时候，类加载器会先检查这个类的Class对象是否已经加载，如果还未加载，则默认的类加载器就会根据类名查找.class文件(这里不一定都是从文件系统中获取，可以从数据库读取字节码或者接受网络中传输过来的字节码)。这些字节码在被加载的时候，会检查验证保证它们没有被破坏。一旦某个类的Class对象被载入内存，它就会被用来创建这个类的所有对象。下面来看下Class类一些操作。  </p>
+<p>获取Class对象的三种方式:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.model;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 学生类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> fuxian.org</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> String sex;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getSex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> sex;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSex</span><span class="params">(String sex)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.sex = sex;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"默认的无参的构造方法"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(<span class="keyword">int</span> id, String name, String sex, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.id = id;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.sex = sex;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.reflectTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.fuxian.model.Student;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test01</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 创建Student对象</span></span><br><span class="line">		Student student = <span class="keyword">new</span> Student();</span><br><span class="line">		<span class="comment">// Java反射机制获取Class对象的三种方法</span></span><br><span class="line">		<span class="comment">// 第一种 通过对象名.getClass()方法获取</span></span><br><span class="line">		Class stuClass1 = student.getClass();</span><br><span class="line">        System.out.println(<span class="string">"stuClass1 is "</span>+stuClass1.getName());</span><br><span class="line">        </span><br><span class="line">		<span class="comment">// 第二种 通过类名.class方式获取</span></span><br><span class="line">        Class stuClass2 = Student<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line">        System.out.println(<span class="string">"stuClass2 is "</span>+stuClass2.getName());</span><br><span class="line">        System.out.println(stuClass1 == stuClass2);</span><br><span class="line">        </span><br><span class="line">		<span class="comment">// 第三种 通过Class.forName("xxx")方法获取</span></span><br><span class="line">        Class stuClass3 = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			stuClass3 = Class.forName(<span class="string">"org.fuxian.model.Student"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">"找不到这个类"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">        System.out.println(<span class="string">"stuClass3 is "</span>+stuClass3);</span><br><span class="line">        System.out.println(stuClass2 == stuClass3);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">控制台输出结果:</span><br><span class="line">默认的无参的构造方法</span><br><span class="line">stuClass1 is org.fuxian.model.Student</span><br><span class="line">stuClass2 is org.fuxian.model.Student</span><br><span class="line">true</span><br><span class="line">找不到这个类</span><br><span class="line">stuClass3 is null</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+<p>通过结果我们可以发现在运行期间，一个类，只有一个Class对象产生  </p>
+<p>三种方式常用第三种<br>第一种对象都有了还要反射干什么<br>第二种需要导入类的包，依赖太强，不导包就抛编译错误<br>一般都选第三种，一个字符串可以传入也可写在配置文件中等多种方法</p>
+<h3 id="反射辅助类-Method类"><a href="#反射辅助类-Method类" class="headerlink" title="反射辅助类-Method类"></a>反射辅助类-Method类</h3><p>我们通过反射获取了运行时的Class对象,我们通过可以获取他的所有的方法  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.reflectTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 第三种 通过Class.forName("xxx")方法获取</span></span><br><span class="line">		Class stuClass = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			stuClass = Class.forName(<span class="string">"org.fuxian.model.Student"</span>);</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------1:获取全部的public的函数----------"</span>);</span><br><span class="line">			<span class="comment">// 1:获取全部的public的函数(包括从父类继承的、从接口实现的所有public函数)</span></span><br><span class="line">			Method[] methods = stuClass.getMethods();</span><br><span class="line">			<span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">				System.out.println(method);</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(<span class="string">"----------2:获取全部的类自身声明的函数----------"</span>);</span><br><span class="line">			<span class="comment">// 2:获取全部的类自身声明的函数，包含public、protected和private方法</span></span><br><span class="line">			Method[] methods2 = stuClass.getDeclaredMethods();</span><br><span class="line">			<span class="keyword">for</span> (Method method : methods2) &#123;</span><br><span class="line">				System.out.println(method);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------3:获取\"名称是name，参数是parameterTypes\"的public的函数----------"</span>);</span><br><span class="line">			<span class="comment">// 3:获取"名称是name，参数是parameterTypes"的public的函数(包括从父类继承的、从接口实现的所有public函数)</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Method method3 = stuClass.getMethod(<span class="string">"getName"</span>);</span><br><span class="line">				System.out.println(method3);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (NoSuchMethodException | SecurityException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------4:获取\"名称是name，参数是parameterTypes\"，并且是类自身声明的函数----------"</span>);</span><br><span class="line">			<span class="comment">// 4:获取"名称是name，参数是parameterTypes"，并且是类自身声明的函数，包含public、protected和private方法</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Method method4 = stuClass.getDeclaredMethod(<span class="string">"setName"</span>, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">				System.out.println(method4);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (NoSuchMethodException | SecurityException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">"找不到这个类"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">控制台输出结果:</span><br><span class="line">----------1:获取全部的public的函数----------</span><br><span class="line">public java.lang.String org.fuxian.model.Student.getName()</span><br><span class="line">public int org.fuxian.model.Student.getId()</span><br><span class="line">public void org.fuxian.model.Student.setName(java.lang.String)</span><br><span class="line">public void org.fuxian.model.Student.setSex(java.lang.String)</span><br><span class="line">public java.lang.String org.fuxian.model.Student.getSex()</span><br><span class="line">public void org.fuxian.model.Student.setId(int)</span><br><span class="line">public void org.fuxian.model.Student.setAge(int)</span><br><span class="line">public int org.fuxian.model.Student.getAge()</span><br><span class="line">public final void java.lang.Object.wait() throws java.lang.InterruptedException</span><br><span class="line">public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException</span><br><span class="line">public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException</span><br><span class="line">public boolean java.lang.Object.equals(java.lang.Object)</span><br><span class="line">public java.lang.String java.lang.Object.toString()</span><br><span class="line">public native int java.lang.Object.hashCode()</span><br><span class="line">public final native java.lang.Class java.lang.Object.getClass()</span><br><span class="line">public final native void java.lang.Object.notify()</span><br><span class="line">public final native void java.lang.Object.notifyAll()</span><br><span class="line">----------2:获取全部的类自身声明的函数----------</span><br><span class="line">public java.lang.String org.fuxian.model.Student.getName()</span><br><span class="line">public int org.fuxian.model.Student.getId()</span><br><span class="line">public void org.fuxian.model.Student.setName(java.lang.String)</span><br><span class="line">public void org.fuxian.model.Student.setSex(java.lang.String)</span><br><span class="line">public java.lang.String org.fuxian.model.Student.getSex()</span><br><span class="line">public void org.fuxian.model.Student.setId(int)</span><br><span class="line">public void org.fuxian.model.Student.setAge(int)</span><br><span class="line">public int org.fuxian.model.Student.getAge()</span><br><span class="line">----------3:获取&quot;名称是name，参数是parameterTypes&quot;的public的函数----------</span><br><span class="line">public java.lang.String org.fuxian.model.Student.getName()</span><br><span class="line">----------4:获取&quot;名称是name，参数是parameterTypes&quot;，并且是类自身声明的函数----------</span><br><span class="line">public void org.fuxian.model.Student.setName(java.lang.String)</span><br></pre></td></tr></table></figure>
+<h3 id="反射辅助类-Field类"><a href="#反射辅助类-Field类" class="headerlink" title="反射辅助类-Field类"></a>反射辅助类-Field类</h3><p>还可以通过反射获取类中所有的属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.reflectTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test03</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 第三种 通过Class.forName("xxx")方法获取</span></span><br><span class="line">		Class stuClass = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			stuClass = Class.forName(<span class="string">"org.fuxian.model.Student"</span>);</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"------------1:根据变量名获得对应的变量，访问权限不限---------------"</span>);</span><br><span class="line">			<span class="comment">// 1:根据变量名获得对应的变量，访问权限不限</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Field field1 = stuClass.getDeclaredField(<span class="string">"name"</span>);</span><br><span class="line">				System.out.println(field1);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (NoSuchFieldException | SecurityException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(<span class="string">"------------2:获得类中所有属性变量 ，访问权限不限---------------"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 2:获得类中所有属性变量 ，访问权限不限</span></span><br><span class="line">			Field[] fields1 = stuClass.getDeclaredFields();</span><br><span class="line">			<span class="keyword">for</span> (Field field : fields1) &#123;</span><br><span class="line">				System.out.println(field);</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(<span class="string">"------------3:根据变量名获取对应public类型的属性变量---------------"</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 3:根据变量名获取对应public类型的属性变量</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Field field2 = stuClass.getField(<span class="string">"name"</span>);</span><br><span class="line">				System.out.println(field2);</span><br><span class="line">				</span><br><span class="line">			&#125; <span class="keyword">catch</span> (NoSuchFieldException | SecurityException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(<span class="string">"------------4:获取类中所有public类型的属性变量-------------------"</span>);</span><br><span class="line">			<span class="comment">// 4:获取类中所有public类型的属性变量</span></span><br><span class="line">			Field[] fields2 = stuClass.getFields();</span><br><span class="line">			<span class="keyword">for</span> (Field field : fields2) &#123;</span><br><span class="line">				System.out.println(field);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">"找不到这个类"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">------------1:根据变量名获得对应的变量，访问权限不限---------------</span><br><span class="line">private java.lang.String org.fuxian.model.Student.name</span><br><span class="line">------------2:获得类中所有属性变量 ，访问权限不限---------------</span><br><span class="line">private int org.fuxian.model.Student.id</span><br><span class="line">private java.lang.String org.fuxian.model.Student.name</span><br><span class="line">private java.lang.String org.fuxian.model.Student.sex</span><br><span class="line">private int org.fuxian.model.Student.age</span><br><span class="line">------------3:根据变量名获取对应public类型的属性变量---------------</span><br><span class="line">java.lang.NoSuchFieldException: name</span><br><span class="line">	at java.lang.Class.getField(Class.java:1703)</span><br><span class="line">	at org.fuxian.reflectTest.Test03.main(Test03.java:32)</span><br><span class="line">------------4:获取类中所有public类型的属性变量-------------------</span><br></pre></td></tr></table></figure>
+<h3 id="反射辅助类-Constructor类"><a href="#反射辅助类-Constructor类" class="headerlink" title="反射辅助类-Constructor类"></a>反射辅助类-Constructor类</h3><p>通过反射获取类中的构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.reflectTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test04</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 第三种 通过Class.forName("xxx")方法获取</span></span><br><span class="line">		Class stuClass = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			stuClass = Class.forName(<span class="string">"org.fuxian.model.Student"</span>);</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------1:返回所有public构造方法----------"</span>);</span><br><span class="line">			Constructor[] constructors1 = stuClass.getConstructors();</span><br><span class="line">			<span class="keyword">for</span> (Constructor constructor : constructors1) &#123;</span><br><span class="line">				System.out.println(constructor);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------2:所有的构造方法(包括：私有、受保护、默认、公有)----------"</span>);</span><br><span class="line">			Constructor[] constructors2 = stuClass.getDeclaredConstructors();</span><br><span class="line">			<span class="keyword">for</span> (Constructor constructor : constructors2) &#123;</span><br><span class="line">				System.out.println(constructor);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------3:返回指定类型的 public构造器----------"</span>);</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Constructor constructor1 = stuClass.getConstructor(String<span class="class">.<span class="keyword">class</span>, <span class="title">int</span>.<span class="title">class</span>)</span>;</span><br><span class="line">				System.out.println(constructor1);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.println(<span class="string">"----------4:返回指定类型的构造器----------"</span>);</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Constructor constructor2 = stuClass.getDeclaredConstructor(<span class="keyword">int</span><span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">				System.out.println(constructor2);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">"找不到这个类"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">----------1:返回所有public构造方法----------</span><br><span class="line">public org.fuxian.model.Student(int,java.lang.String,java.lang.String,int)</span><br><span class="line">public org.fuxian.model.Student()</span><br><span class="line">----------2:所有的构造方法(包括：私有、受保护、默认、公有)----------</span><br><span class="line">public org.fuxian.model.Student(int,java.lang.String,java.lang.String,int)</span><br><span class="line">public org.fuxian.model.Student()</span><br><span class="line">----------3:返回指定类型的 public构造器----------</span><br><span class="line">java.lang.NoSuchMethodException: org.fuxian.model.Student.&lt;init&gt;(java.lang.String, int)</span><br><span class="line">----------4:返回指定类型的构造器----------</span><br><span class="line">	at java.lang.Class.getConstructor0(Class.java:3082)</span><br><span class="line">	at java.lang.Class.getConstructor(Class.java:1825)</span><br><span class="line">	at org.fuxian.reflectTest.Test04.main(Test04.java:28)</span><br><span class="line">java.lang.NoSuchMethodException: org.fuxian.model.Student.&lt;init&gt;(int)</span><br><span class="line">	at java.lang.Class.getConstructor0(Class.java:3082)</span><br><span class="line">	at java.lang.Class.getDeclaredConstructor(Class.java:2178)</span><br><span class="line">	at org.fuxian.reflectTest.Test04.main(Test04.java:38)</span><br></pre></td></tr></table></figure>
+<h2 id="反射的简单应用"><a href="#反射的简单应用" class="headerlink" title="反射的简单应用"></a>反射的简单应用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.inter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">String <span class="title">cry</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">String <span class="title">eat</span><span class="params">(String food)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.fuxian.inter.Animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> <span class="keyword">implements</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">	<span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getColor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> color;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(String color)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.color = color;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"dog run..."</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">cry</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"汪 汪 汪..."</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">eat</span><span class="params">(String food)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"喜欢吃:"</span>+food;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fuxian.reflectTest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test05</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//		String className = "org.fuxian.model.Dog";</span></span><br><span class="line"><span class="comment">//		String methodName = "eat";</span></span><br><span class="line"><span class="comment">//		String parameter = "骨头";</span></span><br><span class="line">		</span><br><span class="line">		String className = <span class="string">"org.fuxian.model.Sheep"</span>;</span><br><span class="line">		String methodName = <span class="string">"eat"</span>;</span><br><span class="line">		String parameter = <span class="string">"草"</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Class c = Class.forName(className);</span><br><span class="line">			Object obj = c.newInstance();</span><br><span class="line">			Method eat = c.getDeclaredMethod(methodName, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">			Object returnValue = eat.invoke(obj, parameter);</span><br><span class="line">			System.out.println(returnValue);</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			System.out.println(<span class="string">"找不到这个类"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InstantiationException | IllegalAccessException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SecurityException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAGGCAIAAABOmCuqAAAgAElEQVR4nO3deUAU5f8H8Gdm72W5EXBVQEBFDiXyxCOvVAyLvPJbeH7VKO3rRWge5VfJu7QyszKv/KoZah54i6lYhoaiCESoqCAiNyzL3s/vj9H9bcuyDOwxu/B5/aGwOzvPzO6+eWae55lnCIwxAgAwh2R6AwBo7SCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADAMQggAwyCEADCMbZa1SGSqvCdSs6zK0uQyJQOzPGKkUanVGo21y6WBw+MwWTqHxWKzGNyA+sL9naxconlCmPdEumB7jllWZWmF+aUKhdoaJWEkr5PJJVK1yirFmYZks9gcttDFkSAIa5br7Obg5iGyZomNEglY+z7sLuKbJxp0wOGo+WGNRiGTVxaXSStr7CKBCCGNSq2ok1c9LZNW1sjrZExvDpMkderle/+2ZonWi7utsMwfeoyxTCJV1sntJXUGYYzlUhmSyqQVNQghroDH5nF4QgHT22VtGfdrbt2vttpxaaurCQkLpFBaLZGUVcpq7OPIkz5FnVxaKZGUV9bV1GrULWrXGrXu0H2JTGWdsqAmbL7KotLWcCcPpUyplCllNVKEEEEQPAc+V8BncVr4N6e4QvH6yvSU1b2sUFarqwnNmMLWkEA9GGOZpK66pEImkSoVSqY3x+LuFVmjzb/VhdCqbX8tV111rbymlumtsLhle3OtcFBq2YOK2dE+Ad5CixbRVAq5SmOm/jqlvOVXBUawWCRpchefLfQTPq2Ur096YPAp6qA0YVzHkRFtLLcBlg1hgLfQ+l2fADTVmfTSjPs1DT27NfmRRUPY6g5HAWgqSZ366+SHlls/hBCAxh26Wnw1q8JCK4cQAkCL5YbRQAgBoGv3hUJLrBZCCABduy8U3rpfbfbVQggB+IdjH0cEihvsV7PE1UIQQgD+QcRnLxrrb2QBsx+UQggB0BfQVtg/2LWhZ3dfKPzXhltmHEkDIQTAgIRxHb1cuQ09W1yhaGiQTTNACAEwQMRn7/8w3MgCqebrNrSVC1KGLk0z7wpJksjLKiJIugO27/882siz/uOPN+NVxhlcpykrZLAU48XV17Gzl4U24MKn5rz4qLu/o5HhbOZiEzWh2RPYDDS/PcDGmfe7tCq2k0hg8fHlzIfQQgnEqMmXLUEOTeE//riNvIFm/EaJ+OyV73Qy19oawnwILacZE4fZyNcItCotN4St7qp3YK9abgibVRNaedZNYCG20MpAn620jjbEvI1dyNABJ0ESVU/LVQol/aZUUJ9SpuAKeK1w3h3T2XQIzZ5A9KJ13n/8cYIgVEqVtLJGKVMQJNG8BNaPNP3Wf4NL+o05Wv/BquIyOiusuDqdZtFNQnMfJeVVGGORmzNPyMcIIZ00Wq5HxL5qvIbY7uGoJRKodf/n0Uq5ovpZhVKugArQXAiCkJRX1ZRValRq7btquQS2GDYaQosmkKJSqBDCcBJoXgRBKGWKquKyssfFyPIJtML3xApsNIRWAOmzNKgDaWrNIYQUApvQikNItt59BzalFX8RoSIEtsGmuyjoqN9ITfNk3SyHozRPe1z77TC9rOYxuIUGt6ehHg44tbM0ew2hkQ4i6ikaUYSq0CYY+ShbRuNno+zycJROF22jy0C7jC0w/jG1jL74RtlfCOl/MN1nnDf2NKSQaWb5Y9oC2FkIm/SRkCzSyKVJ0EXBoKFL0+h/lC0+h3YWwiYhjcYMMmhHWnYOW3IICRIhY9fpEnDNIbAF9tQ62tQ/h6TR7niCIBDCNNtI6TfTm3htPv0rIep3M9DvCLHQ9RY0+Y8/3oyJnoYuTWupjaUtuiY0fsQJFSGwDa04hADYhpYdQqa3AAAaWnQIjV+tCxkFtsGeQtjU8/JGuihM2xgAzMWeQthkUNfZJBgRrseeuigQQhc+7UW/o4JkES3j86bZ92Cw48Hga5t0VQez/RlaLbV/ArXsmhBaR21WUxPVghOI7DGE9D+PS+v6WHRLADALOzscpTR6UNqy/3C2DNRn1OjJRWv4KO2vJqRc+LRXQx9Pa/jYWolW8lHaZU2o1Uo+pBZM+wnqVYmt6pO17xBaDf1h2fTbY01vt2y2JjV4mjLVP32tKnV67PVwFIAWA0IIAMNadQihI9Gi4LbHNLXqEAJgC2w0hE2aCKgZ4I+0dVj6fW4Zc8/YdOuoiW8xSRL3cp429CxGiCAIuLOspRnMYTOmt2jBbDqEtq9+Y73B7xz9Nn36g7DrL0l/cvsmTYMPLM1GD0etAsO1TsAWtOwQNpIxiCCwBS37cNTo+R42cNUvHJKZgEAII4yev+0YadQa6hGMMcYYYYw1GCOEMK6qkGKMsQZrNFijwQhjtebFchhpNPgFhLT/YES9+HkhLwR2bVv/xN6+xt8wH8L6l0ToRIPQ/d94xfX8A3r+KSOEsEaDsEbz/DPEL57RYIww0mCMsVomU6tUCCGsob430EjTfLKy0uc/EQghAmFc1fAcP+VCfjOKIKg1E//4JlSW1zq7CpuxNtvBfAjRP3P4tKBCqVRTf/k0mv//0/c8QkZjQvzjP0QQZOXTMiPLK6VSjVqt/bUuO77ZuwDqcj4UdN1o/XIrSmpc3B2e/xlFCNlbNYhsJIRI5+oyaa3c4EAW6q9gk1pSGl+YIBFSQ/bMpS473vo5xAjJpEoe//k32e4SiGwnhBS7ewdN6Yymf/5pypkq/csyGlrSVdyGfnHwF60ZWnbrKAB2AEIIAMMghAAwDEIIAMMghAAwDEIIAMNsq4vCOFOubDLY+WFwhU3qJrHONPumXPRgiYF4Jl6dRP8dNvsnbpugJgSAYRBCABgGIQSAYRBCABgGIQSAYRBCABgGIQSAYTbaT2h6D16zV9ikvimz3yzFlBnT6HcJNqnj0exzh5ry4Zr+kdkgqAkBYBiEEACGQQgBYBiEEACGQQgBYJiNto5aZwi81VrVLHETbJptoSbeoIJ+QWZv0Kb/cju6YMIgGw0hANYklynrpHKMEFbrz2yrUWuqq6TamcUdRAIW28zHjxBCAFB5ieRpQaXBpxQKVVlxjfZXkiRFTgLzlg4htB5GbnShV6glDoxbldLiGrOHEBpmWhe4442JLHFXWfPUhBq1pqa67sXdWJB2U9UqjVnWb+9s6qtvUxtjj+RyJY/HMeMKzVMTKhSq0qfVpcU1ZcU1Zc9qyp5Jyksk5SUSpVJllvW3PKWlpXfu3JkxY4afn19OTk51dbVKpcIYazSaNWvWlJeXY4y3b9+OEFKr1Rjj8vLyx48fV1RUZGRklJSUIIQuX76sUCiysrJe3G4K19bWBgQEPH78mPp106ZNu3fvJkkSDkHNSyFTmneFLfOcsH5zuYmTC5l3Qqfvv/8+Kytrw4YNERERMTEx+/bt++9//3vgwIGJEycSBBETE5OcnBwbG1tUVIQxJkmyqKiIw+E8efKEz+fX1tY+ffq0TZs2PXr04HA4hYWFXbt2pXK4a9euN954o3379tSvcrl8zpw5CCHP0nUPHw719fXV2wya4TRlkDr9fothywwseT5Rf8lXl1+vv9i5VT1pbo9ZlBbXcPkcM1aGLTOENov63stvzr1y5cqWLVs++OCDp0+fjho1CiGUlJQ0fvx4NpsdFBS0Z88ehBCHw1Gr1SwWq7CwsLq6+tmzZ1R1x+PxwsLC6urqBAJBVlbWsGHDqLtV7d2799ChQwghgiA0Gs2kSZMWL14sFovPnj3r4+ODMW7aTa1AwyQ1MgihXdq2bduaSSg7O3sP2vLRRx+dOHFi/fr1ISEhpaWl06ZNO3jw4JQpU3744Qcej7dgwYKtW7cOHTo0ISEhMDDwjz/+uHfvXmZmJpvN7tChQ0VFxeTJk48dO+bj4+Pp6UlFC2OcmprKYrGonzds2LBo0aLt27cXFhYSBIExLi4u9vLyghyahUKq1L0joomgddR63n33XT6f36VLl2m9M6/XTly+fPmCBQuGDx9+//79/Px8kiRnzpy5e/duqVTq7u5eWVn55MmT/Pz8lJSUpKSka9euVVZWlpeXZ2Rk5OfnI4QOHDhw9OhRBweHkpIShUKhUChIkkQIYYwvXLiwfPnyyMjIf//739QjDx488PLyOnfunKOjI7NvQssgkylrqqTmWhuE0HpqamqmTJni7u7u5+eHENq4cePRo0e3bdv20UcfffbZZwRBDBw4MC0tjcViSSQSNze3q1evpqWlnTt3rra2VqVSIYQ0Go1G87zB+cqVK8ePH//9999PnTp1//796upq4sWNVGNjYyMjI0+fPk098uDBA6FQmJycPGbMmJqamga3DzSFpFpmrlVBCK1n4cKFhYWFEyZM8Pf3n9jtulqtnjlz5sCBA8+fPz9jxgyqNeWDDz5QKBTp6ekcDmfr1q1PnjxpKDa8l7Y8fPjw22+/PXz4cEpKSnp6ukajwRgrFIrw8PATJ044OjpijB8+fOjg4ODl5TV+/HiJROLq6mrdnW6x5HKztfzDOaGV+Pn5PXjwQK1Wr127NiwsLDY2dtOmTRMmTPj0008PHjx47dq1FStWLFu2rF27djExMYWFhQ8fPuRHfO1sdJ3OfbdjhC6VoEv/Q5rMCXPnzn3ttdfu3bt36tQpaoGSkhJfX9+dO3e+++67n3zyybFjx2bPnm2FnQVNwnwIGRx9b3D2FAvdXuKrr77avXv3lClTFi9e/NNPP7322mtCoRAhtOQ79Zo1a5YuXerr67tp06bOnTunpaXV1tbyuqyXlZdTr6V1I3jx8jNnfvbx8XnjjTe0j7Vp02bbtm1z5sxp166dg4ODVCpduXKl9lm9XvuGSqmo94gp98ZoSP3eCER7ehtrfo6WwHwIW4no6OhJkyZlZGSsW7furbfe2rBhw/z58wUCwZ076//73x8jIiKioqLEYvH+/ftV7T/h/fO1qryPEEI8Hk8ul2OMMcbczuvqF5GRkfHjjz+KRKKJEydSHRKbNm1auHDh66+/vmbNGoxx165drbKvoGkghFaydevW7777TiAQFBcXX7x48cMPP6ytrT1+/HhiYuKAAQOOHTvWsWPHS5cuHT58mB34vOuZXfDfIUOGTJkyxdX1rFqt/vPPP8vLyyMjI2UymaenJ5fLzc7O3r9//29PoqjliY6Jac/Qvfj4t956CyH0ySefvPnmm/v378cYBwUFUcucP3/+1VdfZeQdAA2BEFrJ+++/v27dup49ew4ZMmTixIkIIQcHhwULFty9e3fs2LEjR45csmTJyZMn2YFrtC9ZtmxZ//79vby8JBKJQCBwc3OrqKhwd3fncDgEQTg6Onp4eISFhS1fvjwlJYXTaS31qidPnlRVVa1bt66iouLXX38dMmRIWFgYQqi2tnblypUuLi4QQlsDIbSeRYsW/fnnn0VFRWKxmDpcJEmypKSkpqYmMjLS0dGxoqKC5YYQQorcRRMmTBg9ermnp6e7u7tcLmez2SRJqtVqNvsfH1l5eXliYmJWVtaqVauecN9DCPG6rJ85c+aECRN69uzp6urq5OREddYvXLjwvffeu3LlCiP7DoyAEFrJxx9//O9//7tHjx7Ur9qRK0OHDkUIYYyPHTvGCliNEJr/Zvnrr18NCAjw8PCgFuPxeNo+QCpR1M8YYy6XSxBEUFDQ/v37N2/efORmBEKooKDA19fX19eXIIibN28mJydHRkY6OTmJxWJqNCmwKdBPaCUrV67s0KGD3oO6g8gePXpE/TBmzJiuXbtSCaSaYTQajVKpVCgU1KBQjUajVqvVarVGo+FwONor3OLi4tqrvkUIVVVVeXt7EwSxZ8+e7Ozsmpqa5OTk9evXt2nThhptA2wK8zWhJWbpodm0bbAVu0nt3fTnor99+3b37t0RQtqB1LojqqmkIYScnJzCwj6g6jeMsVqtJghCoVCw2WzqQJTqkWexWARBqFQqaqgatR4+nx8VFfX9OVRYWPjo0SO5XF5WVlZcXBwXF+fn55eamvrdd98dP368svL5PA60ej5oo/++0Z9Xn2Y3g9kn6rcyqAmtpHv37o8fP96yZcuGDRvOnj2rd01DWVkZ9cOcOXN0Dz5ZLBZJkhwOByFE1YpUGqnjUg6HU1tby+fzqUDW1dX961//cq/ZXFdXd/HiRZVKNWXKFFdX14EDB3bs2DE5OXnEiBF//PEHI7sPjIAQWsm1a9fat28/e/bs+Pj4tm3b/vTTT9rgIYSomJEk2bFjR91XUWFjsVhsNpvFYlG1pfbMEGPs7OyMMXZwcMAYCwQCkiRDQkIIgggODg4KCrpw4cKQIUMyMzMfPHiwZs2aqKioGzduWHnHQaMghFYikUguXbqkVqtJkgwLC3vrrbdcXFy0z1Lp4nA4bdu2rf9aKnUIIRaLRR2jal9CkmTbtm01Gg31FEJo4MCBGGOqOh0/fnzPnj2dnZ0Jgqiurv79998DAgKss7+APubPCVuJ3r17i0QipDNTEEmS2p+pcdUjR45s27at3lRCdXV1MpmMzWZrNBoHB4e6ujqSJPl8vlqtViqV5eXld+/eLSkp4XA4/v7+BEEMGzZsw4YNVC+I7np+++23P//8My0tLTk52Ro7DGiDEFqJh4fH5MmTe/To0atXr+DgYC6Xq7cAi8VaunSpWCxGCFVUVKSnp7u5uXG5XAcHh7Zt21IhpProqQW++OKLc+fOtWnTxsfHp7CwsEuXLl5eXiRJCgQCqh8fIURdDJWWlnbjxo3KysouXbqEhIRYf9+BcRBCK3n48OGlS5fy8/O///77srKyLl26dOnSpW/fvtqTQC6X6+np6eHhUVBQcPXq1Vu3bj19+lQul0skkkGDBg0aNCgwMNDJyUkmk5WVlV2/fn3Tpk21tbVqtdrJySkyMrKqqqqgoMDT01MoFLLZ7Orq6piYmMrKyuDg4H79+s2cOXPAgAElJSXQRWGDmA+hwasoHuQW03y5KYPlLdG0rddpoe2xKCgo6NWr1+jRowUCw1PH+vj4vPTSSyRJnjx5smPHjuPGjautra2pqcnPz09KSrp06dLkyZN9fX27detWUFCQmpq6f//+wMDAqqqqkpKSgoKCZ8+esVgstVotlUrVavW0adNqamqkUmlOTs6+ffuobkaNRsPrsr4uux9VYl12fDP2CDXQDWP2jgf67OiCCYOYD2ErERERUV5e/vDhQ5lMxuPxqMEujo6OXl5e1AJisZhqTenRowdV6VEndQqFonfv3tSMT0FBQRwOh8VijRkzhsPhiESi2tpaDofj6upaWlqKECJJUigUvv766ytWrHB3d6+pqcnIyJDJZARBeHp6on8ODwA2AkJoJdHR0Q4ODjweTyQSOTk5jRo1SiAQ1NTUaDQaqkW0Xbt2IpGIIAgPDw+qCSc3NzcrKys3N7dPnz7Ozs5isVgkElEdjEKhcMuWLVeuXPHw8PDx8XF0dHR3d3/jjTeovnuhUFhdXe3u7s7j8aRS6ZUrV3bt2lVUVIQQYrFYCoWC2bcC6IEQWsnBgwepfjztI3qjQF1cXIRCIUEQPB7v119/PXLkyLlz55RKpVgsZrFY06ZNc3d3pxZ2dHRUKpWvvfba22+/ffXq1b/++qu8vJwgCGdn506dOpWUlFCtOwRBcLncESNGDB8+fNWqVZcvX7579252djZT7wBoCITQSqZMmSKXywUCgbOzc0RExLvvvktNT6g9Ppw2bRp1COrt7e3l5TV06FCMsVKpJEmSGqSGXox043K5IpFozJgxGOPBgwfrXlpBEISbm5unp+eRI0dkMtmzZ89IkmzXrl2HDh0GDx7cr18/qlBgUyCEVrJt2zaq24CSm5ur0Wi019oihHx9fUmS1A5Yox6kRtLI5XI+n49e1JlSqdTZ2Rm96MTXrV01Gk1RUZG/v394eDh1HX1dXd2DBw+ys7PnzZtXVFSkVCpTU1OtscOANgihlXh4eKSkpNy+ffvOnTt///13RUXFzJkzdUMoFAqpoTDoRYe+tvbj8f5/vgu5XM5ise7du+fm5qZdWBtaiURSWlqKMZbL5dQaBAJBSEhISEjI2LFjEUJKpZnvowBMZ/chNOWCCVNWSKE/u5Ew+DP+008nTZo0f/780NDQ+q2UbDZbO8aFGpBNPaI31JvP53fq1ImKsaurq0aj0c75W11dnZOTQ137W1hY+Pnnn8tksjfffDMqKkooFGZnZ4eEhFBVq0ENXVTBf5F2i7L3yZpMAWNHrSTC7cijR4+++OKLsLAwg/0EVJun9lftGaP2GFWLJMnOnTtXV1frDkwjCOLBgwfUBYckSfbp02fPnj2vvvrqN99806FDh3HjxhUVFW3dunXVqlUW20XQTBBCK0lNTXV0dGyom44gCLVaTR1Dah+hqkH04mpDasS2Uql8+PBhUVERNSmwthpUq9UKhUJbbQoEAoIgZs2adfny5T///DM8PPzNN988fvw41cQKbIrdH47aEeM3eVUoFNevX4+IiNC9uoJ6VXFxcXp6ukQi8fPz27hxo7e3t4eHx6uvvlpbW+vg4EAtVl5evnfv3nfeeYdqueHz+RjjnTt3Dhs2rHPnzsuWLQsNDY2OjtaedgLbASG0nocPH3p7e+u2sug6d+7csGHDtPMy6T7l5uY2YsQIapKLBQsWsNlslUrVuXNnqskUIYQxzsvL8/HxWbVq1dy5c7t27bp06dLg4OApU6acPHny1KlTo0ePHjJkyJ49e2Qy2fz58y2+q6ApIIRWsnv37v79+9+9ezc5Ofnvv/+m7kCodfv27TfffFPbHKr3Wupglbqm/uWXX1apVOXl5SKRSNvpRxAEn88PCAhwd3dPSEhIT09PTExct27d5s2bZ86cyefzDx8+PHjw4Li4ON0jXmAjmA+hwbHaJjaLmTJ9ukH07zjdUHvp1KlTu3Xr9u233y5fvlz38U2bNkVFRXXr1g0hdPXq1U6dOlGDPLXkcjl15URNTQ2LxVKpVNSUM1QnYXl5efv27UmSVKlU7du3Lysrmzt3rjD4s66CffPnzx82bNj48ePPnDkzffr0mzdvcrncXbt2NVQT0hzP3RBLtGSacpNgOwINM1YiEAiuX7/ep08fpNMXn5+fP23aNKq38LPPPhsyZMhXX32l+yq1Wp2dnZ2ZmblgwQKpVFpbWyuTySorK3NycmbPnr1t2zaJRCKRSPLz86kJoMLCwtLT0xFC2XVvz1pdfOfOneTk5JUrVyqVypCQkJkzZ1IbAGwKhNBKrl+/rr2QlzrgPHv27JEjR6hmmHv37i3/AbECVh88eFC3P10ulxME8ezZs4qKCozx48ePs7OzHz58yOFw+vbtO3bsWIzxs2fPtGOyMcbXrl3Tvnz06NErVqyIiYk5deqUSqVKSkrq16+f9fYZ0AMhtBKqg56qA8vLy9PT08PDwxcsWHDmzBknJ6ew0b9Qi+Xm5l65cuXmzZuVlZUXL17kcrnh4eEXL1708vLicDguLi4ikahNmzZ5eXmDBg2uq6sjCVKlUqmUKoIgfvzxx8HTUu/UTNAWSvp/mpiYGBMTw+VwCgsLt2zZYqSzHjCF+XPCVgVjfPPmze3bt48ePbp79+4Y47Fjx2p8/qu7zKJFizZu3JiXl1deXk4Nmrl27Vp0dLSjo6NGo7lw4QKfz/f28mbL77HYbGrmKI1GjRC6dfXQy3wNQggRCOHn//Z/aWM7F3Ro73px4ICIiJfPnj3LyI4DIyCE1oMx/vHHH//++++EhIQOHTqQJJmUlKSXQITQjRs3QkND165dqx0dSp0BUqeOISEhGGO1Rq1MmyarlSEN0raRHvj4peerIDCBCfw8iEijUbM4ZEmH4fcfPMzNzX3llVess7+AJgihlUyePDk1NZUkyby8POoRIxNgZ2ZmikSiBQsW1NTUeHh4yOXy4OBghJBarXZ0dLx165ZYLK4l/Hmy2yoeWVEqJQhSrVGrVRqVAjuIuIhEKqWazSWUcuzsymMrsJqt6h4eEfFyzyVLllhphwFtNhpCEycsodmQbeIk7agpA7j1OgapDncjy0skkgsXLqxcudLX11ehUDx69EilUqlUKowxn89fu2btwmEPsEbNIggOj81iI6UcOznzFHIVxgSbw+IJSLUaqRQKgkQajRphgsUiMUaffvqphYaPmjgNPs0lGZzJxnJsNIQtm6Ojo/EEIoS4XO61a9fi4+OpifGvXLlSUlKCEKIuU8rJzSEHq2SERiNV8LkkwogjYCGs4XFJhBEiNAghNhvxnLlIrVEQagKz/Hx8+g0YmJmZaY09BE0BIWQANfbauKFDh7Zp0+bLL78cP378V199tXTp0g4dOhQUFNy9e9fT0zM7O3u9qANCSCQS+fn5ZWZmYowQxkhvfDhGiEACvsDZxdXZxVUqlUqlUsvsE2g+CKEt8vPz27lz5wcffJCTk9OrV68JEyZ8+OGHUqn04cOHixYtevLkCZ/PP3pdHRoaunju4itXrmy73c+rbkufPn0OHDigXcmrr77K5XKp+8CgYuTpJaSGgDO3W8AwCKEtCgkJcXR0PHny5DvvvPPbb79NnDgxJCTk0aNHJEnOmzcvMjLy+++/9/f39/HxuXfvXmZmJkLdO3XqdOLECWrq0dGjR3fu3NnNzU0qlbJYLOr+2HoTZwDbAZ31tsjDw4MaI+rn53fv3j2xWHz8+HGhUBgQEFBbW4sQatu2bU1NjZ+fX15e3rBhw9yqN/3++++vvPLKqFGjnJycOnXqdOrUKWdn5759+yYmJgYFBbHZbB6PV1FRcfLkSaZ3DuiDENqiXr16bdiwQSQSlZSUqFSq3r17f/TRRzt27HB1daUmuu/duzd1q1CZTBYUFDRy5Mju3bt7eXk5OztT02cIhcIuXbpcvnz59u3bmzdvdnFx8fX11R3RBmyHjR6Omv0qCrO3lZui0Vvk7vyk/Vw5OUQAABnQSURBVPnz5zt16nTx4kVB141X/zfExcWF6mCk5mgTiUR//PFHaWlpQEAAxrhNmzZhYWFJSUne3t58Pv+vv/7y9/e/d+9eaGjooUOHEEIFBQV79+7VK8Ux4mvdX2vSZxvcGLNfymD6DZJbGKgJGVCXHS//K8HIAidPnlSIl4vF4gcPHiCE/P39EUKPHj3Szvvk6+vr4OCQm5sbFBRUUVHh4OBw/vz5l156SSQSZWZmfvHFF48fP/7pp5/u3r1LreHXX3/VK0IvgYBBNloTtnjUhDFG7EEIof+/wO/333+nfoiLi6N+WLRokfbZqKgo3df+73//M75ySKBNgZrQGgRdNzZ6CApaLQghAAyDw1HrMW9laOJsFMB2QE0IAMPsqSY0eyu2FXojKAZnkqd/BQZN9GejYhu6W3BDL3cVt2n2JrXmjgf6oCYEgGEQQgAYBiEEgGEQQgAYBiEEgGEQQgAYBiEEgGH21E9oCqvN0mWwIINdgh3HHqv/4INDrze7aPodjwa7BBt6uSlTntFcIaLdZ9si+xihJgSAYRBCABgGIQSAYRBCABgGIQSAYcy3jtJv77LEkjQ11B7o38W72UUbbAi1xDUc9Rm8MKKhogOC9Pfx3KqeppRusCBTrrew92s1oCYEgGEQQgAYBiEEgGEQQgAYBiEEgGEQQgAYxnwXBcU6TfN6SJIsffRULatT1dUhgjAyiaAlRnVbp8fF9DdWo8EmrkGP2TsP7Kg3wqBWXRNijBGB2EIh392D4+AgDP6M6S0CrZFN1ISMVIP/hFk8HovHY3ozQGvEfE3IZAIJhP55qEV/6k4AzIX5EALQykEIAWBYqw8hwfQGgFbPJhpmGmK5pufnJ6L1295x05rjhy5NM88GGUXztNleWurpv2kXPu2l90jAWyfqL4YNdaLYy7uBWm1NaOATwhhjLHJ3YWJzQKtmozWhFf6MUTd/54uEQmeRpcsCwIhWWhMihB4kvR7Q1Vvg6MD0hoDWrvWGEFHnEtAwA5jWukOIEEFACgHDWnUIDbSOAmB1NtowQ59e871Gg/ObMpM8QRCYRrdEQ63q9dvQDS5piXYmmus0vej6e2RwH+u/FQ0taUrR936KNmWFtsmOQ6iNn0aDBQ48Bweui4cIazD1yRn8TtRHEE3tGgTAzOw1hP7jj2OMMMY+AW14PDZ1zZtupy3tKNYbxA2AddllCDuOO+7gyPPwdOJwWRoNNuGqUwztMoBx9hfCoUvT/Lt4UT83Gj/j9SFGiCAJpDbvBgLQNHbWOmrmsZoYQU0IGGdnITQ76CcEjLOVw1GNBrPZLLc2IicXIZ0+gyYZujStoSNSkjQphPVrZoMFWeI+wTTvYmv6xAUdO3vpPUKz5bkhJr685WE+hBoN5nBY/kGeCFNXMli1rRJqQsA45kMYGNwWYWzwkjArgBACxjEfQqbi9xxkEDCttTfMmHhOCIDpWnsI4XAUMK5VhNBIcxyEEDCO+XPCJrnwaa+m9tcbbxBnsUz6M0TzKgrrMLEjpKGXm9KjYOKlFTTfXnvv87C/mrBJ73ijCxNwTggQatvB1cffw1Ps7OzGwHQnFgwhi02yWCxLrNmMf/ngaBRQWGyWg4jv5sHArF8WORx1chXy+Ry+gMPhWiSEiMZxKc2gQusoYJzZQujs5iAQcgRC693YyEgO6VeV0DADjOMLuB07e9VJ5XVSZVV5rSWKME8IeXwOI/W46celEEJAh0DIEwh5QhG3ViKXVNaZ98ap5gmh/X6VaTbMNJR2UwZwmzJWm/7LDb62SSuk2Zhp702UdPD5XD6f6+7haN7V2l/rqHmRdvvnA7QYrT2E0DwKGNd6Q0gdZZEsCCFgmI2G0GrjTuz3bBa0GDYaQmStHMK8o4BxNj121Ao5hJoQMM6mQ2gt2NLX9tIfMG1wSVN6I+gX3dAA7vprsMQfR5pDvVtkR4jtHo5aB1SEgHGtPYSQQsA45kPI7AEGgZB/F++Onb38u3j7B3lb4TbdAOiBc8LnMMZwYxjACOZrQsR0ZahlI5sBWhtbqQmpADA1NwTEDzDIVkJIsbswmLLBZj//pL9CE4u22jT4dvd9aB6bOBwFoDWDEALAMAghAAyDEALAMAghAAyDEALAMAghAAyDEALAMAghAAyDEALAMAghAAyDEALAMAghAAyzbAifVsotun4AWgDLXsq0PunBmfRSixZhI0qfViuVaqa3wqq4PLa7p5lvjcKUe0VSBku3+PWEGfdrLF2ELXjyqEIuUzK9FVbFF3DaSpjeCAuQyFQivlWvs4VzQvOAOdtajAXbcyQylTVLhBCaCaSwpch7Il2wPceaJZqn2g33dxIJWJI6WidFxz6OsHJ1D0CjJDLVgu05eU+kCKG8J9JZWzI/nxFknS+q2WrCfR927+5P6zR9wfYcZs+DAahPxGd/PiMoUCykfrVmfUhgs96U6F6RdNne3OIKRaNL9g92TRjXEapEYGtmbcmk6kOEUKBYOGVIu+V7/za4ZMpq88xDZeYQIoQkMtXrK9PpLOnlyt3/Ybh5SwfARLrHpQghI+dZthtCyr0i6bpD97V7YkR3f8dVsZ2gSgQ2Rbc+bIithxA1pUoUCVgr3+lkoc2wDqVCrVa3rs56kiS5vBb7p7NWpl536L7xtkY7CCFC6HR6ydbkRzRbTe1aWamkuryW6a2wKr6A07aDG9NbwSRzhdCy/YQjI9ocW/7y2H5eFi3FFkA3IWg2a3TWz37Nd1WsfR9tNorFghiCZrLSiJl+wa4pq3tNGdrOOsUxADIImsuqw9amDG33+Ywga5ZoNZBB0GzWHjsa7u/UQqtEiCFoJmYGcE8Z2s7LlctI0ZYCGQTNxdhVFN9/ENo/2JWp0s0OMgiazbL9hACARsH1hAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMMghAAwDEIIAMPsNYQlJSUZGRnHjx//6quv5s6dGxUV1a5du3Pnzp06dYogiLt37/79998vvfTS0aNHzVJccXExQRAXLlwwy9qsU1bXrl3nz59vfJnk5GSCINRqtd7jFy9e7NmzZ21tbUMv/OGHH3r37l1SUqL7YFhY2IcffmikuJkzZ/bs2bOxDW917DKEd+/eDQwMfPvtt7du3Tpv3rxHjx7FxcWlpKQMGTJEJBIhhGQyWadOnWJjYydMmDBp0qSKigrzbkCHDh2IBkRFRdlvWVoRERGPHj3asmWLwWeLi4sTEhKCg4PbtGnT0BqKi4vnzp07YsSI+gmn/PDDDw3tF0EQgwcPRgh17NjRyDJ6OnToYJZ9ZwC2c2w2e+PGjdpfb926hRBKTU2lfr127VpERMTly5dNLOXp06cIofPnzxtfbNiwYSNHjrRyWb/88ktTP/Rdu3ZRKzlx4gRCSKVSYYxjY2ONv+rGjRvUq0aNGuXj41NZWSmTyYYPH3727Fnq8dDQ0Pj4+KysrPfff9/f3z8xMbG0tFR3m2fMmNGjR4+G9mjQoEHDhg0z+FRlZaXuZlPy8vIQQr/88ovxN8r2tbQQ3r9/HyGk/VqYLi4uTu+7GB0d3dDCJobQvGUFBQXNmzevoWdXrFihV5ZMJsMYT5gw4fDhw9rFVCrVkCFDduzYoX1k8eLFJElq/0aMGTNGLBZTYQsNDXVzc+vWrduOHTsUCoX2JYmJifUjvWXLFr1NarUhtMvDUSOcnJwQQhKJxFwr/Oabb/A/a6fjx4+ba+UMlvXJJ5/gf9aEPB4PIRQYGDhjxoyioiJqsdWrV6empgYFBVG/rlmzZu3atbNmzerWrdtff/31+++/Dxky5MmTJ//5z3+oBWJiYjIyMqZNm8bhcBBCgwcPPnr06NKlS6lvm25NOHv2bAvtmt2xyxAOGDBAeyagUqni4+O1v3p4eCCExowZo3fCMGDAAIOrUiqV3bt3DwkJMdIIYRfOnDmjt8s5OTmbN2/WezAjI8P4ej7++ONu3brl5+cjhLKzsxMTE7dt29a3b1/q2eDgYCcnp5SUlDFjxixevHjHjh0FBQVLlizZt2/fuXPnEEIuLi66a0tLSysoKLDIDrcgbKY3oDmuXLmi/ZnD4axdu3bhwoXaR7y8vObNm/fRRx/RX6FGo6G/cFlZmbu7O/3lTdHUskpLSxta/u7du6GhoQ298NChQ+PGjdP+GhkZqf15+vTp06dPRwhNnTp1586dVVVV9V9+//59lUolFovT0tLkcjlVqf78889SqbRbt270t791ssuasCElJSVqtdrHx0f717eqqmrAgAFGDuo4HE5GRkZ2draDg0Oj6z98+HDfvn2XLFmyfPlygw1058+fp5aMioqi36xHodoDm1GWWYwdO1b3LCUyMvLEiRN6py47d+5ECI0ePbr+xvTp0ycqKmrFihVPnz4VCoXUg7NmzYqLi6t/DFJWVvbpp5/OnDnTjNtv3yx5wmkNbDY7Li4uMTGxT58+YrG4vLw8JiZm1KhR1LOjRo0SiURpaWnNXv+TJ0+2bt06aNAghNCMGTOysrKMLGxiw4wpZZ0+fZrOx33r1i3dlVDnhImJibNmzdI+ePnyZYRQSkqKwXKjo6PHjRun+4iLi8vmzZvp7OC4ceNEIpGfn9/ixYvz8/P1ntVrmGm0tba+iRMn0tkMW2OXNWFFRcXRo0cXLlzYs2dPlUp148YNJyen7du3FxYWurq6hoaGpqenq9Xqd9555+zZs0lJSaZ0EC9ZsiQzMzM+Ph4hNHHixK5du5pvP8xfll6XgK7MzEzdJYuLi7/++uuPP/4YIcRms3UbSw8ePOjt7a1XM9PRqVOn5cuXa3+9c+dO3759r1+//vjx41WrVgUEBKSkpPj4+OTk5KxZs8bX19f42n788UftxlONVQcOHNDdo/qto/v372/qNtsCuzwnXLZsWV5eXnR09Pvvvx8UFDRx4sQPPvhA+2z//v0TExOHDx9+48aNEydOjBgxwpSyqGOw4uJiUzfaKmVR7VJ0rF69GiEUGxubnp4eHx+/d+/eqVOn6i5AEITeS5YtW7Zq1SqEUFJSUv1ndanV6o0bN37++ecrV67s2bPnRx99VFpaevLkyY0bN966dYs6Y2wSqotCr9WnxbDLEH799ddGnhWLxQihnJycy5cvd+/eHSE0e/bswMDARsdwtQD0G2a++OILhFBycjL165QpU6ZMmVJXV9enT5/w8PDdu3dTj3/yySfffffd/fv3BQKB9rXjxo37+eeftb+6urrqFpScnJyQkBAeHn779m0vLy+E0Jo1a0zcL6rSCwwMNHE9tskuQ2jEN998k5CQ4OTkRJJkcHAw9eCNGzfY7Ja2pwbRrwkNSkhIuH379vvvv19XVycQCP7880+qQtNNoHFffvllWlra3r17X3rpJVO2RM/Zs2fFYnFAQIAZ12k77PKc0KDk5OSXX3555cqVW7duzcrKqq6uXrt2LfVUbm5ueHi4wVe1mH5CCv1zQoNWr169devWLVu2eHt7T5s2bdiwYRMnTnz33Xf1FqMOR7WoY0XK1KlTz5w5o03giBEjfvrpJ5ob31BH0b1793bs2DFr1iya67E79h3CO3fuqFQqT0/P69evx8fHx8bG3r9/f9KkSe3atdu2bdvKlSu//fbbP/74o7KykmpyrE/zQkNF1NbWKpVK6htMDcexHGuWZZCjo+N777138uTJwMDAXbt2VVdX5+Tk1L+eo37rqPYpvc1OT0/Xdhcplcq8vDxqhH19xcXFOTk5Pj4+eo8/fvw4Ojo6ODh48eLFpu6ezWpOkyrTFAqFWCzmcrlcLnfQoEHV1dUGFztx4kR4eLhQKExISGh2WZs3b0YIsdns6OhoaniXbqd2faZ0UTSvLOPLGBQdHS2RSBQKRWJiokgkokqvrKw8ePDguHHjhEJhTEzMtWvX8vPz4+PjXVxcBg4c+Ouvv1KLabsopFKpQqHIz8/ncrnbt2/HGPfp0ycmJobacvyiq+P06dM5OTlsNpskSU9Pz2PHjunusnbj2Wx2jx49cnNzdZ89ePCgh4fHqFGjKisr679dLWbsqF2G0GaZ5SoK65T15ZdfkiQpFAoTExMxxgkJCUFBQbGxsbt27Xr27JnukhKJZPPmzUFBQZmZmVgnhNSFTiRJRkREUIfBJ0+ebN++vTbqQqHw7bff1h3J3SRZWVnBwcHbtm1raIEWE0ICY9zUv6MAUNRqNYvFYnor7B6EEACG2XfDDAAtAIQQAIZBCAFgGIQQAIZBCAFgGIQQAIZBCAFgGISwCSZNmvTee+9RPx85cmTAgAF6U1Cb7tChQ1FRUUql0vRV6V1ia15ff/31yy+/rHfp448//hgWFqadqQ3QxfSQHbshkUiEQuGKFSuoXwcOHNi5c2ezl3Lr1i0+nx8XF4cxXrZsWaMf365du6gpKprk9OnT2hLpXCmrHQ6qfSu8vb2pjdQVGRmpN7Yb0AEhpGvfvn1sNvvRo0cY49u3byOEdCcdNiNqTKbufLuUGzduoHoT4BoRGBi4bNmyRhdzcXGhhl8blJSUpBfC+hHt378/xjg1NdVggKk5hYEREEK6+vfvP2HCBOpn4xcu1J9buqnGjRtXP2zTp08XiUQSiYTmSuiHsEk1IUJId1B1bGwsFcL+/fu///77umtev359/VoU1AchpIW6xcXJkyfxi3nNkpKS6i/222+/IYS0V/2YUXl5uVAoHD58eEMLyGSyRrNksF5qRk1YP4Q7duzg8/nUYYLW6tWrSZJs8q62PtAwQ8vKlSsRQkKhUC6Xz5kzJzIycuzYsdRTBEFoZ2T5/PPPIyIiXnnlFYMrMeUq/iVLlkilUpIkjd9hysh1Pc24bwx9WVlZ8fHxevdFUqlUXC7XcoW2GBDCxl2/fv3w4cPUzwqFIjg4+Lvvvqu/mFKpLC8vX7BggfG1GbmKf9q0adSEEXoTtFy/fv27777jcrlpaWl+fn7a2Znqi4mJaWhy4ZiYmIZeNWPGjIZeRfOK4Q0bNkydOnXw4MG6fyMghDRBCBs3Z86cMWPGUD87OjoePXo0JCSk/mIcDufChQvvvPNOQ+tpdLbvnTt3Yoz15nGoqqqaPHly//79hw8f3qNHj7i4uJiYmM8++8zgGppXEzZ6OEqHi4vL7du3qUlTKRBCukw7mm35Pv/8cz8/v6ysLKRzspeenh4UFJSTk4MxRgjt2rVLoVAMHz583759ppe4ePHi8PBw6meVSjVs2DCxWFxQUBATE0NdSr9v3z6hUBgXF6d7qtbsc8Kmqr9OqmEGv2jX1U7dHR8f3759exOLaw2gJmyERqM5cOCA3vxFmzdvVqlUutNgcjgcNze3FStWNHRj2mZQKpWxsbHUFMbt2rXTPv6vf/0rJSXl8OHDY8aMqaur030J/Zrw22+/NXprDAO0Xf96DTPadcbFxYWGhv7nP/+h3gSoCWmCEDZi4cKFvXv31n2kqKjowIEDCQkJejM7UPOC79mzxyzlVlVVjRw58vz58ykpKfXn8Ozdu/dvv/329OnT9PR03cfpnxO+++67BrO6fft21EC/AjX9thEsFisxMTEzM3Pbtm0IIZlMxufzzfBetHQQwiZbvXq1h4fH5MmT9R4PCQmJiYlZvXq1WSrD1NRUmUx248aNhmbRDQgI+OOPP/r166f7YDPOCS9dumTGsWZvvPFGTExM586dEYSQNghh0zx+/Hj79u0LFiwweEOF+Pj4vLy8AwcOmF7Qa6+9dvXq1UbvmoIQmj9/PkEQ1Ne90ZqQz+cTBKF7W7IdO3aw2ey2bdvqrpPNZuu9/MyZMzS3/MiRI6+++ipCSCqVQgjpaBWTw5tRbm5uUFBQQ7NB9+3bNzo6WndGal1KpbJHjx4qlSotLc3I7RDLy8sVCgX9Tdq0adOmTZvoL68rIyNj3759fD7/1KlTUVFR2sdVKpXp06hJpdKGpvoFuiCETTN06NCbN2/qPUiS/39AYeSGpI3O9o0Q+uGHH3bt2kWS5M8//zx+/HgTt9a4qqqq2NjYkSNHhoeHR0dHR0dHx8bGPnnypP6SarVaoVCoVCpHR0f66y8oKGjo7gPgH5rSlNp6UXO51x+PlpKSghBKTU01SylJSUlcLjcpKWnHjh1cLnfJkiW5ublNGnt548aNOXPmdO7cOS8vj3okKyvL398/Li7u9OnTuvPwFhQU9OnTp0ePHtRg1MzMzHnz5vXo0cPb25vP51Ozm7PZbN0b6cyZMwcb7aLQUqlUBw8eRAjt3bvX1DelFYAQ0qIXQu0VA0KhcPr06eYqZcuWLdp+85SUlFGjRjV6l6XVq1dT25OQkNC5c2c2mz1q1Kh9+/ZJpVJqPVKp9JdffomNjXVxcXFxcZk6derp06dVKtXHH388ffp07WL0oQYGcGOM4+LitBsmFouXLFli6jvSOsDkv/ZBrVZrD2Wpo1+SJKnTtqqqqsjIyNDQ0Ndff33UqFF6dwvUUiqV58+fP3z48OXLly9fvkzdORDYAgghAAyDLgoAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBhEEIAGAYhBIBh/wcad7nRdu8z0gAAAABJRU5ErkJggg==" alt></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wxpay.jpg" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/07/13/java/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Java网络编程</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/07/13/java/Java%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E4%B8%8E%E6%B3%9B%E5%9E%8B/">
+                <span class="level-item">Java中的集合框架与泛型</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/images/img.jpg" alt="程序猿付显">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        程序猿付显
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        知识分享
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>China· NanYang</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            25
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            6
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/fusxian" target="_blank" rel="noopener">
+                快扫我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/fusxian">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="微博" href="https://weibo.com/fusxian">
+                
+                <i class="fab fa-weibo"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="E-Mail" href="mailto:870086043@qq.com">
+                
+                <i class="fa fa-envelope"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="开源中国" href="https://my.oschina.net/fusxian">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="http://www.oschina.net" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">开源中国</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.oschina.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="http://www.bailiban.com" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">百里半</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.bailiban.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="http://www.hnpi.cn" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">河南工院</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.hnpi.cn</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/2020%E6%9A%91%E6%9C%9F%E9%A1%B9%E7%9B%AE-%E5%9C%A8%E7%BA%BF%E8%80%83%E8%AF%95%E7%B3%BB%E7%BB%9F/">
+            <span class="level-start">
+                <span class="level-item">2020暑期项目-在线考试系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Java/">
+            <span class="level-start">
+                <span class="level-item">Java</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Java-%E9%AB%98%E7%BA%A7/">
+            <span class="level-start">
+                <span class="level-item">Java 高级</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">12</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/SqlServer/">
+            <span class="level-start">
+                <span class="level-item">SqlServer</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%89%8D%E4%BA%BA%E7%BB%8F%E9%AA%8C/">
+            <span class="level-start">
+                <span class="level-item">前人经验</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%BC%80%E7%AF%87/">
+            <span class="level-start">
+                <span class="level-item">开篇</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T06:43:40.917Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E4%B8%AD%E7%9A%84JDBC%E9%AB%98%E7%BA%A7%E7%9F%A5%E8%AF%86/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java中的JDBC高级知识</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T06:43:40.908Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E4%B8%AD%E7%9A%84JDBC%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java中的JDBC应用实战</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T01:46:57.000Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/2020%E6%9A%91%E6%9C%9F%E9%A1%B9%E7%9B%AE-%E5%9C%A8%E7%BA%BF%E8%80%83%E8%AF%95%E7%B3%BB%E7%BB%9F/%E9%A1%B9%E7%9B%AE%E8%B5%B7%E5%A7%8B/" class="title has-link-black-ter is-size-6 has-text-weight-normal">项目起始</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/2020%E6%9A%91%E6%9C%9F%E9%A1%B9%E7%9B%AE-%E5%9C%A8%E7%BA%BF%E8%80%83%E8%AF%95%E7%B3%BB%E7%BB%9F/">2020暑期项目-在线考试系统</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T01:40:52.805Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java网络编程</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T01:40:52.789Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E7%9A%84%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java的反射机制</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T06:43:40.917Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E4%B8%AD%E7%9A%84JDBC%E9%AB%98%E7%BA%A7%E7%9F%A5%E8%AF%86/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java中的JDBC高级知识</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T06:43:40.908Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E4%B8%AD%E7%9A%84JDBC%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java中的JDBC应用实战</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T01:46:57.000Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/2020%E6%9A%91%E6%9C%9F%E9%A1%B9%E7%9B%AE-%E5%9C%A8%E7%BA%BF%E8%80%83%E8%AF%95%E7%B3%BB%E7%BB%9F/%E9%A1%B9%E7%9B%AE%E8%B5%B7%E5%A7%8B/" class="title has-link-black-ter is-size-6 has-text-weight-normal">项目起始</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/2020%E6%9A%91%E6%9C%9F%E9%A1%B9%E7%9B%AE-%E5%9C%A8%E7%BA%BF%E8%80%83%E8%AF%95%E7%B3%BB%E7%BB%9F/">2020暑期项目-在线考试系统</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T01:40:52.805Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java网络编程</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-13T01:40:52.789Z">2020-07-13</time></div>
+                    <a href="/2020/07/13/java/Java%E7%9A%84%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Java的反射机制</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java-%E9%AB%98%E7%BA%A7/">Java 高级</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">12</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/img.jpg" alt="Java的反射机制" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 程序猿付显&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+			  
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
